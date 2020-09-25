@@ -100,7 +100,7 @@ class TurretsManager(object):
 
         :param dict turret_data: the data of the turret to write
         """
-        with db.execution_context():
+        with db:
             turret.save()
 
     def publish(self, message, channel=None):

@@ -74,10 +74,10 @@ def set_database(db_url, proxy, config):
     db_config = config.get('results_database', {}).get('params', {})
 
     if 'testing' in config and config['testing'] is True:
-        database = connect('sqlite:////tmp/results.sqlite', check_same_thread=False, threadlocals=True)
+        database = connect('sqlite:////tmp/results.sqlite', check_same_thread=False)
     else:
         if os.path.isfile(db_url) or os.path.isdir(os.path.dirname(db_url)):
             db_url = "sqlite:///" + db_url
-            db_config.update(check_same_thread=False, threadlocals=True)
+            db_config.update(check_same_thread=False)
         database = connect(db_url, **db_config)
     proxy.initialize(database)

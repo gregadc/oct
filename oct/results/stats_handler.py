@@ -23,7 +23,7 @@ def init_stats(output_dir, config):
 
     tables_to_create = [t for t in [Result, Turret] if not t.table_exists()]
 
-    db.get_conn()
+    db.connection()
     db.create_tables(tables_to_create)
 
 
@@ -42,7 +42,7 @@ class StatsHandler(object):
         self.results.append(data)
 
         if len(self.results) >= 150:  # 150 rows for SQLite default limit
-            with db.execution_context():
+            with db:
                 with db.atomic():
                     Result.insert_many(self.results).execute()
                 del self.results[:]
@@ -52,7 +52,7 @@ class StatsHandler(object):
         """
         if not self.results:
             return
-        with db.execution_context():
+        with db:
             with db.atomic():
                 Result.insert_many(self.results).execute()
         del self.results[:]

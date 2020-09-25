@@ -40,7 +40,7 @@ class ReportResults(object):
         """Initialise the main dataframe for the results and the custom timers dataframes
         """
         df = pd.read_sql_query("SELECT elapsed, epoch, scriptrun_time, custom_timers FROM result ORDER BY epoch ASC",
-                               db.get_conn())
+                               db.connection())
 
         self._get_all_timers(df)
         self.main_results = self._get_processed_dataframe(df)
